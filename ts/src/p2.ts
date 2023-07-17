@@ -1,5 +1,5 @@
-function getInput():string {
-    return `0,9 -> 5,9
+function getInput(): string {
+  return `0,9 -> 5,9
 8,0 -> 0,8
 9,4 -> 3,4
 2,2 -> 2,1
@@ -12,37 +12,37 @@ function getInput():string {
 }
 
 type Point = {
-    x:number,
-    y:number
-}
+  x: number;
+  y: number;
+};
 
 type Line = {
-    p1: Point,
-    p2: Point
+  p1: Point;
+  p2: Point;
+};
+
+function isHorV(line: Line) {
+  return line.p1.x === line.p2.x || line.p1.y === line.p2.y;
 }
 
-function isHorV(line: Line){
-    return line.p1.x === line.p2.x || line.p1.y === line.p2.y
+function parsePoint(p: string) {
+  const [x, y] = p.split(",");
+  return {
+    x: +x,
+    y: +y,
+  };
+}
+function parseLine(line: string) {
+  const [p1, p2] = line.split("->");
+  return {
+    p1: parsePoint(p1),
+    p2: parsePoint(p2),
+  };
 }
 
-function parsePoint(p: string){
-    const [x,y] = p.split(",");
-    return {
-        x: +x,
-        y: +y
-    }
-}
-function parseLine(line: string){
-    const [p1,p2] = line.split("->");
-    return {
-        p1: parsePoint(p1),
-        p2: parsePoint(p2),
-    }
-}
+const results = getInput()
+  .split("\n")
+  .map((x) => parseLine(x))
+  .filter(isHorV);
 
-const results = getInput().
-    split("\n").
-    map(x=> parseLine(x)).
-    filter(isHorV);
-
-    console.log(results)
+console.log(results);
